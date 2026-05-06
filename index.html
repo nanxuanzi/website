@@ -2,9 +2,6 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Expires" content="0">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>我的日常分享小站</title>
     <style>
@@ -18,7 +15,6 @@
             background-color: #ffffff;
             color: #333;
         }
-        /* 顶部导航栏 */
         header {
             background-color: #ffffff;
             border-bottom: 1px solid #eee;
@@ -41,7 +37,6 @@
             font-size: 24px;
             color: #333;
         }
-        /* 欢迎模块 */
         .hero {
             background: linear-gradient(to bottom, #f0f7ff, #ffffff);
             text-align: center;
@@ -66,89 +61,240 @@
             line-height: 1.8;
             margin-bottom: 30px;
         }
-        .btn {
-            display: inline-block;
-            background-color: #0099e6;
-            color: #fff;
-            padding: 12px 30px;
-            border-radius: 6px;
-            text-decoration: none;
-            font-size: 16px;
-            box-shadow: 0 3px 8px rgba(0,153,230,0.3);
+
+        .code-pre {
+            background: #1e1e1e;
+            color: #dcdcaa;
+            padding: 0px 20px 20px;
+            border-radius: 10px;
+            text-align: left;
+            max-width: 650px;
+            margin: 0 auto 30px;
+            font-family: Consolas, monospace;
+            font-size: 14px;
+            white-space: pre-wrap;
+            line-height: 1.6;
+            min-height: 200px;
         }
-        /* 统计卡片 */
-        .stats {
-            padding: 30px 20px;
-            max-width: 600px;
-            margin: 0 auto;
+        @keyframes blink {
+            0%,50% { opacity:1; }
+            51%,100% { opacity:0; }
         }
-        .card {
-            background-color: #fff;
-            border-radius: 12px;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-            padding: 25px 20px;
-            margin-bottom: 20px;
-        }
-        .card-icon {
-            font-size: 32px;
-            margin-bottom: 10px;
-        }
-        .card-number {
-            font-size: 36px;
-            color: #0099e6;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-        .card-label {
-            font-size: 16px;
-            color: #666;
-        }
-        /* 备案footer */
+
         footer {
-     background: #2d2d2d;
-     color: #ccc;
-     padding: 30px 20px;
-     text-align: center;
-     font-size: 14px;
-   }
-   .footer-item {
-     margin: 5px 0;
-   }
+            background: #2d2d2d;
+            color: #ccc;
+            padding: 30px 20px;
+            text-align: center;
+            font-size: 14px;
+        }
+        .footer-item {
+            margin: 5px 0;
+        }
     </style>
 </head>
 <body>
     <header>
         <div class="logo">
             <span class="code">&lt;/&gt;</span>
-            <span class="blog">Tech </span>
+            <span class="blog"> Tech Blog</span>
         </div>
-        <div class="menu-icon">☰</div>
+        <div style="display:none" class="menu-icon">☰</div>
     </header>
 
     <section class="hero">
         <div class="hero-icon">👨‍💻</div>
         <h1>欢迎来到我的站点</h1>
         <p>热爱技术，热爱生活，热爱分享。</p>
-        
-    </section>
 
-    <section class="stats">
-        <div class="card">
-            <div class="card-icon">✍️</div>
-            <div class="card-number">42</div>
-            <div class="card-label">文章</div>
-        </div>
-        <div class="card">
-            <div class="card-icon">🚀</div>
-            <div class="card-number">18</div>
-            <div class="card-label">项目</div>
+        <div class="code-pre">
+            <span id="codeText"></span>
         </div>
     </section>
 
     <footer>
         <div class="footer-item">赣ICP备2026008317号-1</div>
-   <div class="footer-item">© 2026 My Personal Website. All rights reserved.</div>
-
+        <div class="footer-item">© 2026 My Personal Website. All rights reserved.</div>
     </footer>
+
+    <script>
+        // 这里彻底顶格，没有任何缩进
+        const nginxConf = `
+server {
+    listen 80;
+    server_name example.com;
+
+    # 80 跳转 443
+    return 301 https://$host$request_uri;
+}`;
+
+const el = document.getElementById('codeText');
+let i = 0;
+
+function typeWriter() {
+  if (i < nginxConf.length) {
+    // 文字 + 光标一起显示
+    el.textContent = nginxConf.substring(0, i + 1) + '|';
+    i++;
+    setTimeout(typeWriter, 20);
+  } else {
+    // 打完后只留文字，光标去掉
+    el.textContent = nginxConf;
+  }
+}
+
+window.onload = typeWriter;
+
+    </script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的日常分享小站</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", sans-serif;
+        }
+        body {
+            background-color: #ffffff;
+            color: #333;
+        }
+        header {
+            background-color: #ffffff;
+            border-bottom: 1px solid #eee;
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .logo {
+            font-size: 22px;
+            font-weight: 600;
+        }
+        .logo .code {
+            color: #007bff;
+        }
+        .logo .blog {
+            color: #6f42c1;
+        }
+        .menu-icon {
+            font-size: 24px;
+            color: #333;
+        }
+        .hero {
+            background: linear-gradient(to bottom, #f0f7ff, #ffffff);
+            text-align: center;
+            padding: 50px 20px;
+        }
+        .hero-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+            color: #007bff;
+        }
+        .hero h1 {
+            font-size: 36px;
+            background: linear-gradient(90deg, #007bff, #6f42c1);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 20px;
+        }
+        .hero p {
+            font-size: 18px;
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 30px;
+        }
+
+        .code-pre {
+            background: #1e1e1e;
+            color: #dcdcaa;
+            padding: 0px 20px 20px;
+            border-radius: 10px;
+            text-align: left;
+            max-width: 650px;
+            margin: 0 auto 30px;
+            font-family: Consolas, monospace;
+            font-size: 14px;
+            white-space: pre-wrap;
+            line-height: 1.6;
+            min-height: 200px;
+        }
+        @keyframes blink {
+            0%,50% { opacity:1; }
+            51%,100% { opacity:0; }
+        }
+
+        footer {
+            background: #2d2d2d;
+            color: #ccc;
+            padding: 30px 20px;
+            text-align: center;
+            font-size: 14px;
+        }
+        .footer-item {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <span class="code">&lt;/&gt;</span>
+            <span class="blog"> Tech Blog</span>
+        </div>
+        <div style="display:none" class="menu-icon">☰</div>
+    </header>
+
+    <section class="hero">
+        <div class="hero-icon">👨‍💻</div>
+        <h1>欢迎来到我的站点</h1>
+        <p>热爱技术，热爱生活，热爱分享。</p>
+
+        <div class="code-pre">
+            <span id="codeText"></span>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-item">赣ICP备2026008317号-1</div>
+        <div class="footer-item">© 2026 My Personal Website. All rights reserved.</div>
+    </footer>
+
+    <script>
+        // 这里彻底顶格，没有任何缩进
+        const nginxConf = `
+server {
+    listen 80;
+    server_name example.com;
+
+    # 80 跳转 443
+    return 301 https://$host$request_uri;
+}`;
+
+const el = document.getElementById('codeText');
+let i = 0;
+
+function typeWriter() {
+  if (i < nginxConf.length) {
+    // 文字 + 光标一起显示
+    el.textContent = nginxConf.substring(0, i + 1) + '|';
+    i++;
+    setTimeout(typeWriter, 20);
+  } else {
+    // 打完后只留文字，光标去掉
+    el.textContent = nginxConf;
+  }
+}
+
+window.onload = typeWriter;
+
+    </script>
 </body>
 </html>
